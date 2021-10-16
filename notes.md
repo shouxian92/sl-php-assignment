@@ -19,6 +19,7 @@
         - If endpoint expects a json input then validate for json
         - If we are using some sort of DB layer then sanitize it such that it doesn't do any sort of funny stuff on the DB layer
         - Reject empty payloads
+        - Same key shouldn't appear twice in payload
     - Unit tests
     - Integration between logic layers (if any)
     - Integration tests at CI (can opt to use docker-compose)
@@ -30,7 +31,7 @@
     - the first stores the data with the latest keys and values, this is needed for endpoint that obtains all objects. or at least all of the keys so that we can retrieve it somewhere else later.
     - the second stores a transactional log related to the key/value and encoding type so that we can retrieve it based on timestamp.
 - map_value column
-    - For simplicity sake we should not allow too long a string to be stored. retrieval will be an issue later as it takes up memory in the requests that obtains keys + values
+    - For simplicity sake we should not allow too long a string to be stored. retrieval will be an issue later as it takes up memory in the requests that obtains all keys + values
     - Storing `TEXT` vs `VARCHAR`
         - `TEXT` cannot be directly indexed, but we never have to index this column
     - Text with language encoding should have their encoding retained
