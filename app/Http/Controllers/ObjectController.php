@@ -32,7 +32,7 @@ class ObjectController extends Controller
             return;
         }
         $body = $request->json()->all();
-        app('db')->transaction(function () {
+        app('db')->transaction(function () use($body) {
             foreach($body as $key => $value) {
                 app('db')->insert("INSERT INTO objects (obj_key, obj_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE obj_value=?", [$key, $value, $value]);
                 app('db')->insert("INSERT INTO objects_log (obj_key, obj_value) VALUES (?, ?)", [$key, $value]);
