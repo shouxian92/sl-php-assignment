@@ -1,0 +1,32 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      APP_URL: web
+      PORT: 8080
+      APP_DEBUG: 1
+      APP_NAME: KvmStore
+      APP_ENV: local
+      APP_TIMEZONE: UTC
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: kvmstore
+      DB_USERNAME: root
+      DB_PASSWORD: testpassword
+      CACHE_DRIVER: file
+      QUEUE_CONNECTION: sync
+    links:
+      - mysql
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: testpassword
+      MYSQL_DATABASE: kvmstore
+    volumes:
+     - ./mysql:/docker-entrypoint-initdb.d

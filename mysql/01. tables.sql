@@ -1,17 +1,15 @@
-CREATE DATABASE kvmrepository
-
 SET time_zone='+00:00';
 
-CREATE TABLE keys (
-    map_key VARCHAR(50) PRIMARY KEY,
-    map_value VARCHAR(65535) COLLATE utf8mb4_general_ci
-)
+CREATE TABLE objects (
+    obj_key VARCHAR(50) PRIMARY KEY,
+    obj_value TEXT
+);
 
-CREATE TABLE key_value_log (
-    map_key VARCHAR(50) NOT NULL,
-    map_value VARCHAR(65535) COLLATE utf8mb4_general_ci,
+CREATE TABLE objects_log (
+    obj_key VARCHAR(50) NOT NULL,
+    obj_value TEXT,
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content_type INT NOT NULL DEFAULT 0,
-    PRIMARY KEY(map_key, ts)
-    FOREIGN KEY(map_key) REFERENCES keys(map_key)
-)
+    PRIMARY KEY(obj_key, ts),
+    FOREIGN KEY(obj_key) REFERENCES objects(obj_key)
+);
