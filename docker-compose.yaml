@@ -21,6 +21,8 @@ services:
       QUEUE_CONNECTION: sync
     links:
       - mysql
+    volumes:
+     - ./app:/app/app
   mysql:
     image: mysql
     ports:

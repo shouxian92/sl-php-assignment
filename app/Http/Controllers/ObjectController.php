@@ -1,42 +1,56 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use App\Exceptions\BadRequestException;
+use App\Repositories\ObjectRepository;
 
 class ObjectController extends Controller
 {
+    protected $objectRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ObjectRepository $objectRepository)
     {
-        //
+        $this->objectRepository = $objectRepository;
     }
 
     /**
-     * Returns all a key-value map of all objects in the db
+     * Returns a key-value map of all objects
      */
     public function list() {
-        $results = app('db')->select("SELECT * FROM objects");
-        return $results;
+        $objects = $this->objectRepository->list();
+        $results = array();
+        foreach ($objects as $obj) {
+            $results[$obj->key] = $obj->value;
+        }
+        return response()->json($results);
     }
 
     /**
-     * Adds supports the addition of a kvm in json format only
+     * Returns the value of the given key in the path
+     */
+    public function get(Request $request, $key) {
+        $objRequest = array();
+        $request->get("timestamp");
+        $obj = $this->objectRepository->get($key);
+        return response()->json($obj->value);
+    }
+
+    /**
+     * Add supports the addition of a kvm in json format only
      */
     public function post(Request $request) {
         if (!$request->isJson()) {
-            // return error
-            return;
+            throw new BadRequestException("Malformed JSON payload received.");
         }
         $body = $request->json()->all();
-        app('db')->transaction(function () use($body) {
-            foreach($body as $key => $value) {
-                app('db')->insert("INSERT INTO objects (obj_key, obj_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE obj_value=?", [$key, $value, $value]);
-                app('db')->insert("INSERT INTO objects_log (obj_key, obj_value) VALUES (?, ?)", [$key, $value]);
-            }
-        });
+        $this->objectRepository->create($body);
+        return response([],204);
     }
 }
