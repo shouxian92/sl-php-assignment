@@ -1,6 +1,7 @@
 ## Random stuff
 
 - Spent a lot of time on the PHP research as a lot about which i understand about the language was forgotten. A lot of things are not present in PHP frameworks as compared to other languages i've been using.
+- Logging was a huge issue, there was no simple way to configure the logger in Lumen/Laravel without having deep domain knowledge about the framework. All i wanted was to shift the logging to stdout and there was a clear lack of articles for this.
 
 ## Possible Improvements
 
