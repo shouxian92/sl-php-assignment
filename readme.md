@@ -2,6 +2,35 @@
 
 This project houses a basic PHP project that allows for storage and retrieval of a blob value
 
+# Pre-requisites
+
+- PHP >= 7.2
+- Composer
+- MySQL
+- Docker (For Development)
+
+# Local Development
+
+For local development you may use docker compose to setup a running environment. The default port runs on `8080`.
+
+```bash
+> docker compose up
+```
+
+# Unit Tests
+
+To run unit tests, make use of the PHPUnit library that comes together with it
+
+```bash
+> ./vendor/bin/phpunit --testsuite unit-test
+```
+
+Test coverage results are output in the repository's root location `clover.xml`.
+
+# DB Structure
+
+Do take a look at any files located in the `/mysql` folder.
+
 # API Design
 
 - GET /api/v1/objects
