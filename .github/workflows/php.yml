@@ -42,5 +42,12 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Run unit test suite
+    - name: Run unit test suite (w/ Code Coverage)
       run: composer run-script unit-test
+      
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v1.0.6
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./clover.xml
+        flags: unittests
