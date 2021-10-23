@@ -10,6 +10,7 @@
 - Better error handling
 - Optimize DB queries
 - Add caching layer for timestamp related data
+- Pagination on GET api/v1/objects API
 
 ## Considerations
 

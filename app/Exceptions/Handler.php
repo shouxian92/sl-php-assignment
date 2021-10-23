@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,8 +51,11 @@ class Handler extends ExceptionHandler
 
         if ($rendered->getStatusCode() >= 500) {
             Log::error($e->getMessage());
-            return response(null, $rendered->getStatusCode());
+            return response()->json(['error' => 'Internal server error.'], $rendered->getStatusCode());
         }
-        return response()->json(['error' => $e->getMessage()], $rendered->getStatusCode());
+        if ($e instanceof NotFoundHttpException) {
+            return response()->json(['error' => "Resource not found."], 404);
+        }
+        return response()->json(['error' => $e], $rendered->getStatusCode());
     }
 }
