@@ -1,3 +1,14 @@
+## Random stuff
+
+- Spent a lot of time on the PHP research as a lot about which i understand about the language was forgotten. A lot of things are not present in PHP frameworks as compared to other languages i've been using.
+
+## Possible Improvements
+
+- Rate Limit
+- Add authorization header checks to restrict calls from anyone
+- Better error handling
+- Optimize DB queries
+- Add caching layer for timestamp related data
 
 ## Considerations
 
@@ -19,7 +30,7 @@
         - If endpoint expects a json input then validate for json
         - If we are using some sort of DB layer then sanitize it such that it doesn't do any sort of funny stuff on the DB layer
         - Reject empty payloads
-        - Same key shouldn't appear twice in payload
+        - Same key should result in the "last appearance wins" kind of behavior
     - Unit tests
     - Integration between logic layers (if any)
     - Integration tests at CI (can opt to use docker-compose)

@@ -1,6 +1,8 @@
 # sl-php-assignment [![Build Status](https://github.com/shouxian92/sl-php-assignment/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/shouxian92/sl-php-assignment/actions/workflows/php.yml) [![codecov](https://codecov.io/gh/shouxian92/sl-php-assignment/branch/main/graph/badge.svg?token=KFWLJRW886)](https://codecov.io/gh/shouxian92/sl-php-assignment/)
 
-This project houses a basic PHP project that allows for storage and retrieval of a blob value
+This project houses a basic PHP project that allows for storage and retrieval of a blob value.
+
+Please take a look at [notes.md](notes.md)
 
 # Pre-requisites
 
