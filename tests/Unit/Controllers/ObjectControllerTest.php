@@ -20,7 +20,7 @@ class ObjectControllerTest extends TestCase
             ->setMethods(['list', 'create', 'get'])
             ->getMock();
         $this->request = $this->getMockBuilder(Request::class)
-            ->setMethods(['get', 'isJson', 'json', 'all'])
+            ->setMethods(['get', 'isJson', 'getContent'])
             ->getMock();
         $this->repository = $repoMock;
         $this->controller = new ObjectController($repoMock);
