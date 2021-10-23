@@ -56,10 +56,16 @@ class ObjectController extends Controller
      */
     public function post(Request $request) {
         if (!$request->isJson()) {
-            throw new BadRequestException("Malformed JSON payload received.");
+            throw new BadRequestException("Malformed JSON request received.");
         }
-        $body = $request->json()->all();
+        $body = json_decode($request->getContent(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestException("Malformed JSON payload received. " . json_last_error_msg()); 
+        }
+        if (!count((array)$body)) {
+            return response()->json(["message" => "No data to process."]);
+        }
         $ts = $this->objectRepository->create($body);
-        return response()->json(array("timestamp" => $ts));
+        return response()->json(["timestamp" => $ts]);
     }
 }

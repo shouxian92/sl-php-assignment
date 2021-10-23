@@ -99,9 +99,9 @@ class ObjectControllerTest extends TestCase
 
     public function test_post() {
         $arbitraryBody = new class{};
+        $arbitraryBody->valid = "json";
         $this->request->expects($this->any())->method('isJson')->willReturn(true);
-        $this->request->expects($this->any())->method('json')->willReturnSelf();
-        $this->request->expects($this->any())->method('all')->willReturn($arbitraryBody);
+        $this->request->expects($this->any())->method('getContent')->willReturn('{"valid": "json"}');
         
         $this->repository->method("create")->with($this->equalTo($arbitraryBody))->willReturn(1000);
 
@@ -110,11 +110,32 @@ class ObjectControllerTest extends TestCase
         $this->assertEquals('{"timestamp":1000}', $response->content());
     }
 
-    public function test_post_invalid_json() {
+    public function test_post_missing_json_header() {
         $arbitraryBody = new class{};
         $this->request->expects($this->any())->method('isJson')->willReturn(false);
 
         $this->expectException(BadRequestException::class);
         $this->controller->post($this->request);
+    }
+
+    public function test_post_malformed_json_syntax() {
+        $arbitraryBody = new class{};
+        $arbitraryBody->valid = "json";
+        $this->request->expects($this->any())->method('isJson')->willReturn(true);
+        $this->request->expects($this->any())->method('getContent')->willReturn('"invalid": "json"}');
+
+        $this->expectException(BadRequestException::class);
+        $response = $this->controller->post($this->request);
+    }
+
+    public function test_post_empty_payload() {
+        $arbitraryBody = new class{};
+        $arbitraryBody->valid = "json";
+        $this->request->expects($this->any())->method('isJson')->willReturn(true);
+        $this->request->expects($this->any())->method('getContent')->willReturn("{}");
+
+        $response = $this->controller->post($this->request);
+        $this->assertEquals(200, $response->status());
+        $this->assertEquals('{"message":"No data to process."}', $response->content());
     }
 }
