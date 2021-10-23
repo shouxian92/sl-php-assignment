@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exceptions\BadRequestException;
 use App\Repositories\ObjectRepository;
+use App\Http\Requests\ObjectRequest;
 
 class ObjectController extends Controller
 {
@@ -21,7 +22,7 @@ class ObjectController extends Controller
     }
 
     /**
-     * Returns a key-value map of all objects
+     * Returns a key-value map of all objects in repository
      */
     public function list() {
         $objects = $this->objectRepository->list();
@@ -36,9 +37,14 @@ class ObjectController extends Controller
      * Returns the value of the given key in the path
      */
     public function get(Request $request, $key) {
-        $objRequest = array();
-        $request->get("timestamp");
-        $obj = $this->objectRepository->get($key);
+        $objRequest = new ObjectRequest();
+        $objRequest->key = $key;
+        $ts = $request->get("timestamp");
+        if ($ts) {
+            $objRequest->timestamp = intval($ts);
+        }
+
+        $obj = $this->objectRepository->get($objRequest);
         return response()->json($obj->value);
     }
 
@@ -50,7 +56,7 @@ class ObjectController extends Controller
             throw new BadRequestException("Malformed JSON payload received.");
         }
         $body = $request->json()->all();
-        $this->objectRepository->create($body);
-        return response([],204);
+        $ts = $this->objectRepository->create($body);
+        return response()->json(array("timestamp" => $ts));
     }
 }

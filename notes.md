@@ -35,3 +35,7 @@
     - Storing `TEXT` vs `VARCHAR`
         - `TEXT` cannot be directly indexed, but we never have to index this column
     - Text with language encoding should have their encoding retained
+
+## Laravel Pitfalls
+
+- Started with `app("db")->insert("INSERT INTO objects (obj_key, obj_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE obj_value=?", [$key, $value, $value]);` and ended up with an upsert query that was very clean and allowed for multiple insert statements to be executed in 1 statement instead

@@ -7,6 +7,7 @@ services:
     environment:
       APP_URL: web
       PORT: 8080
+      APP_LOG_LEVEL: debug
       APP_DEBUG: 1
       APP_NAME: KvmStore
       APP_ENV: local
@@ -23,6 +24,7 @@ services:
       - mysql
     volumes:
      - ./app:/app/app
+     - ./tests:/app/tests
   mysql:
     image: mysql
     ports:
