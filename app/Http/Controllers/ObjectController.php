@@ -41,6 +41,9 @@ class ObjectController extends Controller
         $objRequest->key = $key;
         $ts = $request->get("timestamp");
         if ($ts) {
+            if (!is_numeric($ts)) {
+                throw new BadRequestException("Timestamp must be a number.");
+            }
             $objRequest->timestamp = intval($ts);
         }
 

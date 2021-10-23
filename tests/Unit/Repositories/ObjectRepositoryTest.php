@@ -4,7 +4,7 @@ use App\Repositories\ObjectRepository;
 use App\Http\Requests\ObjectRequest;
 use App\Models\ObjectKVM;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\NotFoundException;
 
 class ObjectRepositoryTest extends TestCase
 {
@@ -66,7 +66,7 @@ class ObjectRepositoryTest extends TestCase
         DB::shouldReceive("where")->once()->with("obj_key", "=", $request->key)->andReturnSelf();
         DB::shouldReceive("first")->once()->andReturn($expectedValue);
         
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(NotFoundException::class);
         $this->objectRepository->get($request);
     }
 
@@ -105,7 +105,7 @@ class ObjectRepositoryTest extends TestCase
         DB::shouldReceive("oldest")->once()->with("ts")->andReturnSelf();
         DB::shouldReceive("first")->once()->andReturn($expectedValue);
         
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(NotFoundException::class);
         $this->objectRepository->get($request);
     }
 

@@ -30,7 +30,8 @@
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
+        ],
+        "unit-test": "vendor/bin/phpunit --testsuite unit-test"
     },
     "config": {
         "preferred-install": "dist",

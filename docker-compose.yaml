@@ -25,6 +25,7 @@ services:
     volumes:
      - ./app:/app/app
      - ./tests:/app/tests
+     - ./tmp:/tmp
   mysql:
     image: mysql
     ports:

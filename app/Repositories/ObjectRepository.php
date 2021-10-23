@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\NotFoundException;
 use App\Models\ObjectKVM;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +30,7 @@ class ObjectRepository
         $query = $this->getDBWithKey($request);
         $row = $query->first();
         if (!$row) {
-            throw new ModelNotFoundException("Key doesn't exist." );
+            throw new NotFoundException("Key was not found." );
         }
         $obj = new ObjectKVM();
         $obj->key = $request->key;
