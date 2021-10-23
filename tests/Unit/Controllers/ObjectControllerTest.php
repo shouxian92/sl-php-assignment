@@ -98,8 +98,7 @@ class ObjectControllerTest extends TestCase
     }
 
     public function test_post() {
-        $arbitraryBody = new class{};
-        $arbitraryBody->valid = "json";
+        $arbitraryBody = ["valid"=>"json"];
         $this->request->expects($this->any())->method('isJson')->willReturn(true);
         $this->request->expects($this->any())->method('getContent')->willReturn('{"valid": "json"}');
         
