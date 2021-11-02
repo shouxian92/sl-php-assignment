@@ -57,13 +57,13 @@ class ObjectRepository
      */ 
     public function create($body) {
         DB::beginTransaction();
-        // try {
+        try {
             $ts = $this->executeInsert($body);
             DB::commit();
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     throw $e;
-        // }
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
 
         return strtotime($ts);
     }

@@ -12,7 +12,13 @@
 */
 
 $router->group(['prefix' => 'api/v1'], function () use ($router) {
-    $router->get('objects',  ['uses' => 'ObjectController@list']);
+    $router->get('objects',  [
+        'middleware' => 'security',
+        'uses' => 'ObjectController@list'
+    ]);
+    $router->get('objects/{key}',  [
+        'middleware' => 'security',
+        'uses' => 'ObjectController@get'
+    ]);
     $router->post('objects', ['uses' => 'ObjectController@post']);
-    $router->get('objects/{key}',  ['uses' => 'ObjectController@get']);
 });
