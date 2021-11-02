@@ -1,6 +1,6 @@
 # sl-php-assignment [![Build Status](https://github.com/shouxian92/sl-php-assignment/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/shouxian92/sl-php-assignment/actions/workflows/php.yml) [![codecov](https://codecov.io/gh/shouxian92/sl-php-assignment/branch/main/graph/badge.svg?token=KFWLJRW886)](https://codecov.io/gh/shouxian92/sl-php-assignment/)
 
-This project houses a basic PHP project that allows for storage and retrieval of a blob value.
+This project houses a basic PHP project written with Lumen framework that allows for storage and retrieval of a blob value.
 
 Please take a look at [notes.md](notes.md)
 
@@ -123,11 +123,5 @@ POST /api/v1/objects -d '{"key":"""multi qu"ote"}'
 Response: 400 Bad Request
 {
     "error": "Malformed JSON payload received."
-}
-
-POST /api/v1/objects -d ''
-Response: 400 Bad Request
-{
-    "error": "Empty payload received."
 }
 ```
